@@ -1,7 +1,11 @@
 package com.fatface01.tutorial;
 
+import com.fatface01.tutorial.init.BlockInit;
+import com.fatface01.tutorial.init.ItemInit;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -44,4 +48,11 @@ public class Tutorial {
     @SubscribeEvent
     public void onServerStarting(FMLServerStartingEvent event) {
     }
+
+    public static final ItemGroup CANDY_LAND = new ItemGroup("candy_land"){
+        @Override
+        public ItemStack createIcon(){
+            return new ItemStack(ItemInit.candy_sludge);
+        }
+    };
 }
