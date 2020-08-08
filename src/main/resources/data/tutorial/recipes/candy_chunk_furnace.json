@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "tutorial:syrup"
+  },
+  "result": "tutorial:candy_chunk",
+  "experience": 1.0,
+  "cookingtime": 200
+}

@@ -1,13 +1,17 @@
 package com.fatface01.tutorial.init;
 
 import com.fatface01.tutorial.Tutorial;
+import com.fatface01.tutorial.objects.items.SyrupBucketItem;
 import java.util.function.Supplier;
 import net.minecraft.item.AxeItem;
+import net.minecraft.item.BlockItem;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.HoeItem;
 import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
 import net.minecraft.item.PickaxeItem;
 import net.minecraft.item.ShovelItem;
 import net.minecraft.item.SwordItem;
@@ -15,71 +19,76 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.LazyValue;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
-import net.minecraftforge.registries.ObjectHolder;
-
-@Mod.EventBusSubscriber(modid = Tutorial.MOD_ID, bus = Bus.MOD)
-@ObjectHolder(Tutorial.MOD_ID)
+import net.minecraftforge.fml.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class ItemInit {
 
-  public static final Item green_apple = null;
+  public static final DeferredRegister<Item> ITEMS = new DeferredRegister<>(ForgeRegistries.ITEMS,
+      Tutorial.MOD_ID);
 
-  // candy items
-  public static final Item candy_sludge = null;
+  public static final RegistryObject<Item> GREEN_APPLE = ITEMS.register(
+      "green_apple", () -> new Item(new Item.Properties()
+          .group(ItemGroup.FOOD)
+          .food(new Food.Builder()
+              .hunger(4)
+              .saturation(2.4f)
+              .effect(() -> new EffectInstance(Effects.GLOWING, 200, 1), 1.0f)
+              .build())));
 
-  // candy tools
-  public static final Item candy_sword = null;
-  public static final Item candy_pickaxe = null;
-  public static final Item candy_axe = null;
-  public static final Item candy_shovel = null;
-  public static final Item candy_hoe = null;
+  public static final RegistryObject<SyrupBucketItem> SYRUP = ITEMS.register(
+      "syrup", () -> new SyrupBucketItem(new Item.Properties()
+          .group(Tutorial.CANDY_LAND)
+          .containerItem(Items.BUCKET)
+          .maxStackSize(1)
+          .food(new Food.Builder()
+              .hunger(1)
+              .saturation(0.4f)
+              .effect(() -> new EffectInstance(Effects.NAUSEA, 200, 1), 0.5f)
+              .build())));
 
+  public static final RegistryObject<Item> CANDY_CHUNK = ITEMS.register(
+      "candy_chunk", () -> new Item(new Item.Properties()
+          .group(Tutorial.CANDY_LAND)
+          .food(new Food.Builder()
+              .hunger(1)
+              .saturation(1.5F)
+              .setAlwaysEdible()
+              .build())));
 
-  @SubscribeEvent
-  public static void RegisterItems(final RegistryEvent.Register<Item> event) {
-    event.getRegistry().registerAll(
-        new Item(new Item.Properties()
-            .group(ItemGroup.FOOD)
-            .food(new Food.Builder()
-                .hunger(4)
-                .saturation(2.4f)
-                .effect(() -> new EffectInstance(Effects.GLOWING, 200, 1), 1.0f)
-                .build()))
-            .setRegistryName("green_apple"),
+  public static final RegistryObject<SwordItem> CANDY_SWORD = ITEMS.register(
+      "candy_sword",
+      () -> new SwordItem(ModItemTier.CANDY, 0, 3.5F, candyToolProperties(1)));
 
-        new Item(new Item.Properties()
-            .group(Tutorial.CANDY_LAND))
-            .setRegistryName("candy_sludge"),
+  public static final RegistryObject<ShovelItem> CANDY_SHOVEL = ITEMS.register(
+      "candy_shovel",
+      () -> new ShovelItem(ItemInitOld.ModItemTier.CANDY, -2, 3.5F, candyToolProperties(1)));
 
-        new SwordItem(ModItemTier.CANDY, 0, 3.5F, candyToolProperties())
-            .setRegistryName("candy_sword"),
+  public static final RegistryObject<PickaxeItem> CANDY_PICKAXE = ITEMS.register(
+      "candy_pickaxe",
+      () -> new PickaxeItem(ItemInitOld.ModItemTier.CANDY, -2, 3.5F, candyToolProperties(1)));
 
-        new PickaxeItem(ModItemTier.CANDY, -2, 3.5F, candyToolProperties())
-            .setRegistryName("candy_pickaxe"),
+  public static final RegistryObject<AxeItem> CANDY_AXE = ITEMS.register(
+      "candy_axe",
+      () -> new AxeItem(ModItemTier.CANDY, 2, 2.5F, candyToolProperties(1)));
 
-        new AxeItem(ModItemTier.CANDY, 2, 2.5F, candyToolProperties())
-            .setRegistryName("candy_axe"),
-
-        new ShovelItem(ModItemTier.CANDY, -2, 3.5F, candyToolProperties())
-            .setRegistryName("candy_shovel"),
-
-        new HoeItem(ModItemTier.CANDY, 3.5F, candyToolProperties())
-            .setRegistryName("candy_hoe"));
-  }
+  public static final RegistryObject<HoeItem> CANDY_HOE = ITEMS.register(
+      "candy_hoe",
+      () -> new HoeItem(ItemInitOld.ModItemTier.CANDY, 3.5F, candyToolProperties(1)));
+  public static final RegistryObject<BowItem> CANDY_BOW = ITEMS.register(
+      "candy_bow",
+      () -> new BowItem(candyToolProperties(1)));
 
   /**
    * creates the item properties for candy tools.
    *
    * @return item properties
    */
-  private static Item.Properties candyToolProperties() {
+  private static Item.Properties candyToolProperties(int hunger) {
     return new Item.Properties()
         .food(new Food.Builder()
-            .hunger(4)
+            .hunger(hunger)
             .saturation(1.8F)
             .effect(() -> new EffectInstance(Effects.SPEED, 300, 2), 1.0f)
             .effect(() -> new EffectInstance(Effects.REGENERATION, 100, 2), 1.0f)
@@ -95,7 +104,7 @@ public class ItemInit {
 
     CANDY(1, 32, 5.0F, 4.0F, 16,
         () -> {
-          return Ingredient.fromItems(ItemInit.candy_sludge);
+          return Ingredient.fromItems(ItemInit.CANDY_CHUNK.get());
         });
 
     private final int harvestLevel;
@@ -150,4 +159,10 @@ public class ItemInit {
       return this.repairMaterial.getValue();
     }
   }
+
+  public static final RegistryObject<BlockItem> GREEN_APPLE_CHUNK = ITEMS.register(
+      "green_apple_chunk",
+      ()-> new BlockItem(BlockInit.GREEN_APPLE_CHUNK.get(),
+          new Item.Properties().group(Tutorial.CANDY_LAND)));
+
 }

@@ -1,12 +1,14 @@
 {
   "item.tutorial.green_apple": "Green Apple",
-  "item.tutorial.candy_sludge": "Candy Sludge",
+  "item.tutorial.syrup": "Syrup",
+  "item.tutorial.candy_chunk": "Candy Chunk",
 
   "item.tutorial.candy_sword": "Candy Sword",
   "item.tutorial.candy_pickaxe": "Candy Pickaxe",
   "item.tutorial.candy_axe": "Candy Axe",
   "item.tutorial.candy_shovel": "Candy Shovel",
   "item.tutorial.candy_hoe": "Candy Hoe",
+  "item.tutorial.candy_bow": "Candy Bow",
 
   "block.tutorial.green_apple_chunk": "Green Apple Chunk",
 

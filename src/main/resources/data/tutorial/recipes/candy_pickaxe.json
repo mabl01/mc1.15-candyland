@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ccc",
+    " s ",
+    " s "
+  ],
+  "key": {
+    "c": {
+      "item": "tutorial:candy_chunk"
+    },
+    "s": {
+      "tag": "forge:rods/wooden"
+    }
+  },
+  "result": {
+    "item": "tutorial:candy_pickaxe"
+  }
+}

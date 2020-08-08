@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:bow"
+    },
+    {
+      "item": "tutorial:candy_chunk"
+    },
+    {
+      "item": "tutorial:candy_chunk"
+    },
+    {
+      "item": "tutorial:candy_chunk"
+    }
+  ],
+  "result": {
+    "item": "tutorial:candy_bow"
+  }
+}
